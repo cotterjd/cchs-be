@@ -3,7 +3,6 @@ import { PrismaClient } from ".prisma/client";
 const prisma = new PrismaClient()
 
 function list (job?: string) {
-  console.log(`JOB`, job)
   if (job) return prisma.unitCode.findMany({ where: { property: job }})  
   return prisma.unitCode.findMany()
 }

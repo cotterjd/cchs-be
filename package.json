@@ -8,7 +8,9 @@
     "update-client": "prisma generate",
     "dev": "nodemon",
     "test": "node src/tests/index",
-    "test:watch": "nodemon --watch src/tests/index.js --exec './src/tests/index.js'"
+    "test:watch": "nodemon --watch src/tests/index.js --exec './src/tests/index.js'",
+    "build": "tsc",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
