@@ -1,0 +1,45 @@
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model UnitCode {
+  id Int @id @default(autoincrement())
+  unit String
+  property String
+  user String
+  codes String // TODO: Make this a relationship
+}
+
+// model Skill {
+//   id   Int     @id @default(autoincrement())
+//   name String? @default("")
+// }
+// 
+// model Dev {
+//   id          Int      @id @default(autoincrement())
+//   createdAt   DateTime @default(now())
+//   updatedAt   DateTime @default(now())
+//   email       String   @unique
+//   name        String?
+//   projects    Project? @relation(fields: [projectId], references: [id])
+//   projectId   Int?
+//   skills      Json?
+//   otherSkills String?
+//   skillsId    Int?
+// }
+// 
+// model Project {
+//   id        Int       @id @default(autoincrement())
+//   createdAt DateTime  @default(now())
+//   updatedAt DateTime  @updatedAt
+//   name      String
+//   endDate   DateTime?
+//   devs      Dev[]
+// }

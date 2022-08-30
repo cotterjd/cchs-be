@@ -1,0 +1,49 @@
+{
+  "name": "kahoa_resources",
+  "version": "0.0.0",
+  "description": "",
+  "main": "src/server.ts",
+  "scripts": {
+    "update-db": "prisma db push",
+    "update-client": "prisma generate",
+    "dev": "nodemon",
+    "test": "node src/tests/index",
+    "test:watch": "nodemon --watch src/tests/index.js --exec './src/tests/index.js'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "~4.17.13",
+    "@types/node": "~17.0.45",
+    "nodemon": "~2.0.19",
+    "prisma": "~3.13.0",
+    "ts-node": "~10.7.0",
+    "typescript": "~4.6.4"
+  },
+  "dependencies": {
+    "@prisma/client": "~3.13.0",
+    "apollo-server-core": "~3.6.8",
+    "apollo-server-express": "~3.6.8",
+    "body-parser": "~1.20.0",
+    "express": "~4.17.3",
+    "graphql": "~16.3.0",
+    "isomorphic-fetch": "~3.0.0",
+    "nodemailer": "~6.7.8",
+    "ramda": "~0.28.0",
+    "uuid": "~8.3.2"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      ".git",
+      "node_modules"
+    ],
+    "watch": [
+      "src"
+    ],
+    "exec": "ts-node src/server.ts",
+    "ext": "ts"
+  }
+}
