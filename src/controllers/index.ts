@@ -21,6 +21,11 @@ async function list(req, res) {
   res.json(data);
 }
 
+async function listDistinct(req, res) {
+  const data = await unitCode.listProperties();
+  res.json(data);
+}
+
 async function update(req, res) {
   const id = req.params.id;
   const numId = Number(req.params.id);
@@ -61,5 +66,6 @@ async function login(req, res) {
 
 export default {
   unitCode: { get, create, list, update, del },
+  property: { listDistinct },
   auth: { login },
 };

@@ -1,6 +1,7 @@
 #!/bin/node
 
 const fetch = require(`isomorphic-fetch`)
+const R = require(`ramda`)
 const assert = require(`assert`)
 const printRed = str => console.log(`\x1b[31m %s \x1b[37m`, str)
 const printGreen = str => console.log(`\x1b[32m %s \x1b[37m`, str)
@@ -43,6 +44,17 @@ const testListUnitCodes = () => {
   console.log(`Testing GET /unitcodes`)
   return new Promise((resolve, reject) => {
      fetch(`http://localhost:4000/unitcodes`, {
+       method: `GET`,
+       headers: {
+         'Content-Type': `application/json`,
+       },
+     }).then(r => r.json()).then(resolve).catch(reject) 
+  })
+}
+const testListProperties = () => {
+  console.log(`Testing GET /properties`)
+  return new Promise((resolve, reject) => {
+     fetch(`http://localhost:4000/properties`, {
        method: `GET`,
        headers: {
          'Content-Type': `application/json`,
@@ -145,6 +157,15 @@ function runTests () {
          assert.ok(unitCodes.find(x => x.property === newUnitCode.property))
          assert.ok(!unitCodes.find(x => x.property === otherProperty.property), `should not have other properties`)
          printGreen(`passed`)
+     })
+     .then(testListProperties)
+     .then(properties => {
+        console.log(properties)
+        assert.ok(properties)
+        assert.ok(properties.length)
+        const uniq = R.uniq(properties)
+        assert.equal(properties.length, uniq.length)
+        printGreen(`passed`)
      })
      .then(testGetUnitCode)
      .then(unitCode => {

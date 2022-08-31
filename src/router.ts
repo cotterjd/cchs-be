@@ -13,6 +13,8 @@ router.route('/unitcode').get(controller.unitCode.get)
 router.route('/unitcode/:id').put(controller.unitCode.update)
 router.route('/unitcode/:id').delete(controller.unitCode.del)
 
+router.route('/properties').get(controller.property.listDistinct)
+
 router.route('/login').post(controller.auth.login)
 
 export default router
