@@ -113,8 +113,9 @@ const testPutUnitCode = (id) => {
 }
 
 
-const otherProperty = { ...newUnitCode, property: `Other property` }
+const otherPropertyUnit = { ...newUnitCode, property: `Other property` }
 let unitCodeId = 13 
+let originalUpdatedAt = null 
 function runTests () {
   testServer()
     .then(res => {
@@ -123,7 +124,7 @@ function runTests () {
         assert.equal(res.data.__typename, `Query`, `data should have typename of 'Query', but got ${res.data.__typename}`)
         printGreen(`passed`)
      })
-     .then(() => testCreateUnitCode(otherProperty))
+     .then(() => testCreateUnitCode(otherPropertyUnit))
      .then(() => testCreateUnitCode(newUnitCode))
      .then(unitCode => {
          // console.log(unitCode)
@@ -134,6 +135,9 @@ function runTests () {
          assert.ok(unitCode.property)
          assert.ok(unitCode.user)
          assert.ok(unitCode.codes)
+         assert.ok(unitCode.createdAt)
+         assert.ok(unitCode.updatedAt)
+         originalUpdatedAt = unitCode.updatedAt
 
          assert.equal(unitCode.unit, newUnitCode.unit)
          assert.equal(unitCode.property, newUnitCode.property)
@@ -155,12 +159,12 @@ function runTests () {
          assert.ok(unitCodes)
          assert.ok(unitCodes.length)
          assert.ok(unitCodes.find(x => x.property === newUnitCode.property))
-         assert.ok(!unitCodes.find(x => x.property === otherProperty.property), `should not have other properties`)
+         assert.ok(!unitCodes.find(x => x.property === otherPropertyUnit.property), `should not have other properties`)
          printGreen(`passed`)
      })
      .then(testListProperties)
      .then(properties => {
-        console.log(properties)
+        // console.log(properties)
         assert.ok(properties)
         assert.ok(properties.length)
         const uniq = R.uniq(properties)
@@ -170,6 +174,9 @@ function runTests () {
      .then(testGetUnitCode)
      .then(unitCode => {
         assert.ok(unitCode)
+        assert.ok(unitCode.createdAt)
+        assert.ok(unitCode.updatedAt)
+        assert.ok(unitCode.updatedAt === originalUpdatedAt, `updatedAt should be correct`)
         printGreen(`passed`)
      })
      .then(_ => testBadPut(unitCodeId))
@@ -184,6 +191,7 @@ function runTests () {
        // console.log(updateUnitCode)
        assert.ok(updateUnitCode.id)
        assert.equal(updateUnitCode.codes, updatedUnitCode.codes)
+       assert.ok(updatedUnitCode.updatedAt !== originalUpdatedAt, `updatedAt should have been updated`)
        printGreen(`passed`)
      })
      .then(_ => testDeleteUnitCode(unitCodeId))

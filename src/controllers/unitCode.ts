@@ -25,7 +25,10 @@ function create (data) {
 async function update (id: number, data) {
   const updateRes = await prisma.unitCode.update({
     where: { id: Number(id) },
-    data,
+    data: {
+      ...data,
+      updatedAt: new Date(),
+    },
   })
   if (updateRes.id) { // May be a way to do with with the update
     return prisma.unitCode.findUnique({
