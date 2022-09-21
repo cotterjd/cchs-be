@@ -137,6 +137,7 @@ function runTests () {
          assert.ok(unitCode.codes)
          assert.ok(unitCode.createdAt)
          assert.ok(unitCode.updatedAt)
+         assert.ok(unitCode.newProp)
          originalUpdatedAt = unitCode.updatedAt
 
          assert.equal(unitCode.unit, newUnitCode.unit)
@@ -151,6 +152,7 @@ function runTests () {
          assert.ok(unitCodes)
          assert.ok(unitCodes.length)
          assert.ok(unitCodes.find(x => x.unit === `E123`))
+         assert.ok(unitCodes.every(x => x.createdAt), `all codes should have createdAt field`)
          printGreen(`passed`)
      })
      .then(testListUnitCodesByProperty)
@@ -160,6 +162,8 @@ function runTests () {
          assert.ok(unitCodes.length)
          assert.ok(unitCodes.find(x => x.property === newUnitCode.property))
          assert.ok(!unitCodes.find(x => x.property === otherPropertyUnit.property), `should not have other properties`)
+         console.log(unitCodes)
+         assert.ok(unitCodes.every(x => x.createdAt), `all codes should have createdAt field`)
          printGreen(`passed`)
      })
      .then(testListProperties)

@@ -45,10 +45,16 @@ async function del (id: number) {
 }
 
 async function listProperties () {
-  const uniques = await prisma.unitCode.findMany({
+  const uniques = (await prisma.unitCode.findMany({
     distinct: [`property`]
-  }) 
+  })).sort(sortMostRecent)
   return uniques.map(x => x.property)
+}
+
+function sortMostRecent (a, b) {
+  if (new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()) return 1
+  if (new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()) return -1
+  return 0 
 }
 
 export default {
